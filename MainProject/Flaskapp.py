@@ -32,7 +32,7 @@ Base.prepare(engine, reflect=True)
 Hospitals = Base.classes.hospitals
 Licensed  = Base.classes.LosAnglesCountyLicData
 Encounters = Base.classes.encounters
-Hospitals_Encounters = Base.classes.hospitals_avg_encounters
+# Hospitals_Encounters = Base.classes.hospitals_avg_encounters
 Ed = Base.classes.LA_ed_data
 Food = Base.classes.Food_Pantry
 Access = Base.classes.AccessToCare
@@ -103,21 +103,21 @@ def hospitals():
     return jsonify(all_hospitals)
 
 
-@app.route("/api/v1.0/hospitals&encounters")
-def hos_enc():
-    # Create our session (link) from Python to the DB
-    session = Session(engine)
+# @app.route("/api/v1.0/hospitals&encounters")
+# def hos_enc():
+#     # Create our session (link) from Python to the DB
+#     session = Session(engine)
 
-    """Return a list of dates for each prcp value"""
-    # Query all dates and tobs
-    results = session.query(Hospitals_Encounters.OSHPD_ID, Hospitals_Encounters.LATITUDE, Hospitals_Encounters.LONGITUDE, Hospitals_Encounters.FAC_NAME, Hospitals_Encounters.DBA_ADDRESS1,Hospitals_Encounters.DBA_CITY, Hospitals_Encounters.DBA_ZIP_CODE, Hospitals_Encounters.TOTAL_NUMBER_BEDS, Hospitals_Encounters.NET_TOT, Hospitals_Encounters.AvgAdmits, Hospitals_Encounters.AvgVisits).\
-        order_by(Hospitals_Encounters.OSHPD_ID).all()
+#     """Return a list of dates for each prcp value"""
+#     # Query all dates and tobs
+#     results = session.query(Hospitals_Encounters.OSHPD_ID, Hospitals_Encounters.LATITUDE, Hospitals_Encounters.LONGITUDE, Hospitals_Encounters.FAC_NAME, Hospitals_Encounters.DBA_ADDRESS1,Hospitals_Encounters.DBA_CITY, Hospitals_Encounters.DBA_ZIP_CODE, Hospitals_Encounters.TOTAL_NUMBER_BEDS, Hospitals_Encounters.NET_TOT, Hospitals_Encounters.AvgAdmits, Hospitals_Encounters.AvgVisits).\
+#         order_by(Hospitals_Encounters.OSHPD_ID).all()
 
-    # results = session.query(Hospitals_Encounters.OSHPD_ID, Hospitals_Encounters.LATITUDE).\
-    #     order_by(Hospitals_Encounters.OSHPD_ID).all()
+#     # results = session.query(Hospitals_Encounters.OSHPD_ID, Hospitals_Encounters.LATITUDE).\
+#     #     order_by(Hospitals_Encounters.OSHPD_ID).all()
 
 
-    session.close()
+#     session.close()
 
     # Create a dictionary from the row data and append to a list of all_hospitals
     all_hospitals = []
@@ -200,9 +200,6 @@ def ed():
     # Query all dates and tobs
     results = session.query(Ed.oshpd_id, Ed.facility_name, Ed.DBA_ADDRESS1,Ed.DBA_CITY, Ed.DBA_ZIP_CODE, Ed.licensed_bed_size, Ed.control_type_desc, Ed.ED_Visit, Ed.Medi_Cal, Ed.Medicare, Ed.Other_Payer, Ed.SelfPay, Ed.DX_Symptoms, Ed.HispanicorLatino, Ed.NonHis).\
         order_by(Ed.oshpd_id).all()
-
-    # results = session.query(Hospitals_Encounters.OSHPD_ID, Hospitals_Encounters.LATITUDE).\
-    #     order_by(Hospitals_Encounters.OSHPD_ID).all()
 
     session.close()
 
