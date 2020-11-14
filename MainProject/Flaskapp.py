@@ -37,6 +37,7 @@ Ed = Base.classes.LA_ed_data
 Food = Base.classes.Food_Pantry
 Access = Base.classes.AccessToCare
 Profiles = Base.classes.Health_Profiles
+Enrolled = Base.classes.Enrolled_MediCal
 
 #################################################
 # Flask Setup
@@ -63,6 +64,7 @@ def welcome():
         f"/api/v1.0/food<br/>"
         f"/api/v1.0/hd<br/>"
         f"/api/v1.0/profiles<br/>"
+        f"/api/v1.0/enrolled<br/>"
     )
 
 
@@ -323,6 +325,29 @@ def profiles():
 
     return jsonify(all_proflies)
 
+
+@app.route("/api/v1.0/enrolled")
+def enrolled():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of dates for each prcp value"""
+    # Query all dates and tobs
+    results = session.query(Enrolled.Latitude, Enrolled.Longitude, Enrolled.Provider_Legal_Name, Enrolled.Provider_Type_Code_Desc).all()
+
+    session.close()
+
+    # Create a dictionary from the row data and append to a list of all_facilities
+    all_enrolled = []
+    for lat, lon, name, type in results:
+        enrolled_dict = {}
+        enrolled_dict["Name"] = name
+        enrolled_dict["LATITUDE"] = lat
+        enrolled_dict["LONGITUDE"] = lon
+        enrolled_dict["Type"] = type
+        all_enrolled.append(enrolled_dict)
+
+    return jsonify(all_enrolled)
 
 #################################################
 # Code to run app

@@ -1,7 +1,14 @@
 // Load in geojson data for income
-var geoData = "static/data/Median_Household_Income_2016.geojson";
+// var geoData = "Median_Household_Income_2016.geojson";
+// var geoData = "../data/Median_Household_Income_2016.geojson"
+var geoData = "https://opendata.arcgis.com/datasets/865f2509d5d4450ea6bfd527596ef502_0.geojson"
+    // Grab data with d3
 
-// Grab data with d3
+// var geoData = "../data/Enrolled_Medi-Cal_Fee_For_Service_Provider_File.geojson"
+
+// d3.json(geoData, function(income_data) {
+//     console.log(income_data)
+// })
 
 d3.json(geoData, function(income_data) {
 
@@ -34,7 +41,7 @@ d3.json(geoData, function(income_data) {
         }) //.addTo(myMap);
 
     //Set up Service Planning Area boundries
-    var spa_link = "static/data/spa.geojson"
+    var spa_link = "../data/spa.geojson"
 
     //set up color function for each area
     function chooseColor(objectid) {
@@ -140,7 +147,7 @@ d3.json(geoData, function(income_data) {
                         iconSize: [27, 27],
                         iconAnchor: [13, 27],
                         popupAnchor: [1, -24],
-                        iconUrl: 'static/png/clinic.png'
+                        iconUrl: '../png/clinic.png'
                     });
 
                     result.push(L.marker([lat, lon], { icon: chcIcon }))
@@ -150,26 +157,6 @@ d3.json(geoData, function(income_data) {
                 }
 
             }
-            // facilities.bindPopup(response[i].Name)
-            //Create function to get faclity name for popups
-
-            //     function getPopups() {
-            //         var popup = [];
-
-            //         for (var i = 0; i < response.length; i += 1) {
-
-            //             if (location) {
-            //                 var name = response[i].FACILITY_NAME
-            //                 popup.push(name);
-
-            //             }
-            //         }
-            //         // console.log(popup)
-            //         return popup;
-            //     }
-
-            //     test.bindPopup(getPopups()).openPopup();
-
             return result;
         }
     });
@@ -209,7 +196,7 @@ d3.json(geoData, function(income_data) {
                         iconSize: [27, 27],
                         iconAnchor: [13, 27],
                         popupAnchor: [1, -24],
-                        iconUrl: 'static/png/hospital.png'
+                        iconUrl: '../png/hospital.png'
                     });
 
                     result.push(L.marker([lat, lon], { icon: hosIcon }))
@@ -277,7 +264,7 @@ d3.json(geoData, function(income_data) {
                         iconSize: [27, 27],
                         iconAnchor: [13, 27],
                         popupAnchor: [1, -24],
-                        iconUrl: 'static/png/carrot.png'
+                        iconUrl: '../png/carrot.png'
                     });
 
                     result.push(L.marker([lat, lon], { icon: foodIcon }))
@@ -311,7 +298,7 @@ d3.json(geoData, function(income_data) {
         }
     });
     //Set up health distric boundries
-    var link = "static/data/hd.geojson"
+    var link = "../data/hd.geojson"
 
     d3.json(link, function(data) {
         console.log(data)
