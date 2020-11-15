@@ -1,5 +1,5 @@
 // Store API query variables
-var baseURL = "http://127.0.0.1:5000";
+var baseURL = "https://emsmain.herokuapp.com";
 var option = "/api/v1.0/profiles";
 
 // Assemble API query URL
