@@ -31,8 +31,8 @@ Base.prepare(engine, reflect=True)
 # Save reference to the table
 Hospitals = Base.classes.hospitals
 Licensed  = Base.classes.LosAnglesCountyLicData
-Encounters = Base.classes.encounters
-# Hospitals_Encounters = Base.classes.hospitals_avg_encounters
+Encounters = Base.classes.hospMergedwithTarget
+spa = Base.classes.hospMergedwithTarget
 Ed = Base.classes.LA_ed_data
 Food = Base.classes.Food_Pantry
 Access = Base.classes.AccessToCare
@@ -59,7 +59,7 @@ def welcome():
         f"/api/v1.0/hospitals<br/>"
         f"/api/v1.0/facilities<br/>"
         f"/api/v1.0/encounters<br/>"
-        f"/api/v1.0/hospitals&encounters<br/>"
+        f"/api/v1.0/spacolors<br/>"
         f"/api/v1.0/ed<br/>"
         f"/api/v1.0/food<br/>"
         f"/api/v1.0/hd<br/>"
@@ -103,41 +103,35 @@ def hospitals():
     return jsonify(all_hospitals)
 
 
-# @app.route("/api/v1.0/hospitals&encounters")
-# def hos_enc():
-#     # Create our session (link) from Python to the DB
-#     session = Session(engine)
+@app.route("/api/v1.0/spacolors")
+def hos_enc():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
 
-#     """Return a list of dates for each prcp value"""
-#     # Query all dates and tobs
-#     results = session.query(Hospitals_Encounters.OSHPD_ID, Hospitals_Encounters.LATITUDE, Hospitals_Encounters.LONGITUDE, Hospitals_Encounters.FAC_NAME, Hospitals_Encounters.DBA_ADDRESS1,Hospitals_Encounters.DBA_CITY, Hospitals_Encounters.DBA_ZIP_CODE, Hospitals_Encounters.TOTAL_NUMBER_BEDS, Hospitals_Encounters.NET_TOT, Hospitals_Encounters.AvgAdmits, Hospitals_Encounters.AvgVisits).\
-#         order_by(Hospitals_Encounters.OSHPD_ID).all()
+    """Return a list of dates for each prcp value"""
+    # Query all dates and tobs
+    # results = session.query(spa.licensed_bed_size, spa.ED_Visit, spa.Target, spa.SPA).\
+    #     order_by(spa.OSHPD_ID).all()
 
-#     # results = session.query(Hospitals_Encounters.OSHPD_ID, Hospitals_Encounters.LATITUDE).\
-#     #     order_by(Hospitals_Encounters.OSHPD_ID).all()
+    results =  session.query(func.avg(spa.licensed_bed_size), func.avg(spa.ED_Visit), func.avg(spa.Target), spa.SPA).\
+        group_by(spa.SPA)
 
-
-#     session.close()
+    # results = session.query(Hospitals_Encounters.OSHPD_ID, Hospitals_Encounters.LATITUDE).\
+    #     order_by(Hospitals_Encounters.OSHPD_ID).all()
+    session.close()
 
     # Create a dictionary from the row data and append to a list of all_hospitals
-    all_hospitals = []
+    all_spas = []
 
-    for id, lat, lon, name, address, city, zip, bed, net, admit, visit in results:
-        hoptial_dict = {}
-        hoptial_dict["ID"] = id
-        hoptial_dict["LATITUDE"] = lat
-        hoptial_dict["LONGITUDE"] = lon
-        hoptial_dict["FACILITY_NAME"] = name
-        hoptial_dict["DBA_ADDRESS1"] = address
-        hoptial_dict["DBA_CITY"] = city
-        hoptial_dict["DBA_ZIP_CODE"] = zip
-        hoptial_dict["TOTAL_NUMBER_BEDS"] = bed
-        hoptial_dict["NET_TOT"] = net
-        hoptial_dict["AvgAdmits"] = admit
-        hoptial_dict["AvgVisits"] = visit
-        all_hospitals.append(hoptial_dict)
+    for bed, visits, target, no in results:
+        spa_dict = {}
+        spa_dict["Bed Size"] = bed
+        spa_dict["ED Visits"] = visits
+        spa_dict["Target"] = target * 10
+        spa_dict["SPA"] = no
+        all_spas.append(spa_dict)
 
-    return jsonify(all_hospitals)
+    return jsonify(all_spas)
 
 @app.route("/api/v1.0/facilities")
 def facilities():
@@ -173,20 +167,22 @@ def encounters():
 
     """Return a list of dates for each prcp value"""
     # Query all dates and tobs
-    results = session.query(Encounters.oshpd_id, Encounters.facility_name, Encounters.year, Encounters.type,  Encounters.count).\
-        order_by(Encounters.year).all()
+    results = session.query(Encounters.oshpd_id, Encounters.facility_name, Encounters.licensed_bed_size, Encounters.control_type_desc,  Encounters.Target, Encounters.LATITUDE, Encounters.LONGITUDE).\
+        order_by(Encounters.Target).all()
 
     session.close()
 
     # Create a dictionary from the row data and append to a list of all_facilities
     all_encounters = []
-    for id, name, year, type, count in results:
+    for id, name, bed, type, target, lat, lon in results:
         encounters_dict = {}
         encounters_dict["oshpd_id"] = id
         encounters_dict["facility_name"] = name
-        encounters_dict["Year"] = year
+        encounters_dict["Beds"] = bed
         encounters_dict["Type"] = type
-        encounters_dict["Count"] = count
+        encounters_dict["Target"] = target
+        encounters_dict["LATITUDE"] = lat
+        encounters_dict["LONGITUDE"] = lon
         all_encounters.append(encounters_dict)
 
     return jsonify(all_encounters)

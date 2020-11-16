@@ -1,5 +1,5 @@
 // Store API query variables
-var baseURL = "http://127.0.0.1:5000";
+var baseURL = "https://emsmain.herokuapp.com";
 var option = "/api/v1.0/ed";
 
 // Assemble API query URL
@@ -121,7 +121,7 @@ function getValues(id) {
             }
         };
         console.log(hospSize);
-        
+
         var trace3 = {
             x: labels,
             y: visits,
@@ -211,7 +211,7 @@ function getValues(id) {
         Plotly.newPlot("bar2", data2, layout);
         Plotly.newPlot("bar3", data3, layout2);
 
-        
+
 
     })
 }
@@ -239,7 +239,7 @@ function getData(id) {
             profile_dict["DBA_ZIP_CODE"] = obj.DBA_ZIP_CODE
             profile_dict["licensed_bed_size"] = obj.licensed_bed_size
             profile_dict["SelfPay"] = obj.SelfPay
-                
+
 
             //Push to array
             demoData.push(profile_dict)
@@ -414,38 +414,38 @@ function getData(id) {
         // ];
 
         //Create layout for static guage
-    //     var layout2 = {
-    //         shapes: [{
-    //             type: 'path',
-    //             path: path,
-    //             fillcolor: 'rgba(0, 0, 0, 0)',
-    //             line: {
-    //                 color: '850000'
-    //             }
-    //         }],
-    //         title: 'Los Angles County',
-    //         subtitle: 'Plot Subtitle',
-    //         height: 400,
-    //         width: 400,
-    //         xaxis: {
-    //             zeroline: false,
-    //             showticklabels: false,
-    //             showgrid: false,
-    //             range: [-1, 1],
-    //             titlefont: {
-    //                 title: 'x Axis',
-    //                 family: 'Courier New, monospace',
-    //                 size: 18,
-    //                 color: '#7f7f7f'
-    //             }
-    //         },
-    //         yaxis: {
-    //             zeroline: false,
-    //             showticklabels: false,
-    //             showgrid: false,
-    //             range: [-1, 1]
-    //         }
-    //     };
+        //     var layout2 = {
+        //         shapes: [{
+        //             type: 'path',
+        //             path: path,
+        //             fillcolor: 'rgba(0, 0, 0, 0)',
+        //             line: {
+        //                 color: '850000'
+        //             }
+        //         }],
+        //         title: 'Los Angles County',
+        //         subtitle: 'Plot Subtitle',
+        //         height: 400,
+        //         width: 400,
+        //         xaxis: {
+        //             zeroline: false,
+        //             showticklabels: false,
+        //             showgrid: false,
+        //             range: [-1, 1],
+        //             titlefont: {
+        //                 title: 'x Axis',
+        //                 family: 'Courier New, monospace',
+        //                 size: 18,
+        //                 color: '#7f7f7f'
+        //             }
+        //         },
+        //         yaxis: {
+        //             zeroline: false,
+        //             showticklabels: false,
+        //             showgrid: false,
+        //             range: [-1, 1]
+        //         }
+        //     };
 
         //Plot static gauge chart
         Plotly.newPlot('gauge2', data2, layout2);
@@ -461,9 +461,9 @@ function optionChanged(id) {
     getData(id);
 }
 optionChanged()
-//#############################################################
-// create initial function to get data and display plots
-//#############################################################
+    //#############################################################
+    // create initial function to get data and display plots
+    //#############################################################
 function init() {
     // Assign the value of the dropdown menu option to a variable
     var dropdownMenu = d3.select("#selDataset");
