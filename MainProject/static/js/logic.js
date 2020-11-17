@@ -30,7 +30,7 @@ function chooseColor(objectid) {
 }
 
 d3.json(spa_link, function(spa_data) {
-    console.log(spa_data.features[0].properties.objectid)
+    // console.log(spa_data.features[0].properties.objectid)
     spa = L.geoJson(spa_data, {
             style: function(feature) {
                 return {
@@ -68,11 +68,7 @@ d3.json(spa_link, function(spa_data) {
 var facURL = baseURL + "/api/v1.0/facilities";
 // var hosURL = baseURL + "/api/v1.0/hospitals";
 var hosURL = baseURL + "/api/v1.0/encounters";
-var foodURL = baseURL + "/api/v1.0/food";
 
-// // Assemble API query URL
-// var url = baseURL + option
-// console.log(url)
 
 // Grab the data with d3
 d3.json(facURL, function(response) {
@@ -92,18 +88,28 @@ d3.json(facURL, function(response) {
             // Set the data location property to a variable
             var lat = response[i].LATITUDE;
             var lon = response[i].LONGITUDE;
+            var newwidthfac = response[i].Target * 200;
+            var newheightfac = response[i].Target * 200;
+
+            function chooseImage(clinic) {
+                switch (clinic) {
+                    case "Free Clinic":
+                        return '../png/clinic.png';
+                    default:
+                        return '../png/clinic3.png';
+                };
+            }
 
             // Check for location property
             if (lat) {
 
                 //Icon for hospital markers
                 var chcIcon = new L.Icon({
-                    iconSize: [27, 27],
+                    iconSize: [newwidthfac, newheightfac], //[newwidthfac, newheightfac],
                     iconAnchor: [13, 27],
                     popupAnchor: [1, -24],
-                    iconUrl: '../png/clinic2.png'
+                    iconUrl: chooseImage(response[i].Type)
                 });
-
                 result.push(L.marker([lat, lon], { icon: chcIcon }))
                     // popup.push(L.marker.bindPopup(response[i].Name));
                     // result.push([lat, lon])
@@ -114,6 +120,7 @@ d3.json(facURL, function(response) {
         return result;
     }
 });
+
 
 // Grab the data with d3
 d3.json(hosURL, function(response) {
@@ -140,8 +147,8 @@ d3.json(hosURL, function(response) {
             // Set the data location property to a variable
             var lat = response[i].LATITUDE;
             var lon = response[i].LONGITUDE;
-            var newwidth = response[i].Target * 900;
-            var newheight = response[i].Target * 900;
+            var newwidth = response[i].Target * 1000;
+            var newheight = response[i].Target * 1000;
             // console.log(lat)
 
             // Check for location property
@@ -158,76 +165,58 @@ d3.json(hosURL, function(response) {
                 result.push(L.marker([lat, lon], { icon: hosIcon }))
                     // popup.push(L.marker.bindPopup(response[i].Name));
                     // result.push([lat, lon])
-
             }
-
         }
 
         return result;
     }
 });
 
-// Grab the data with d3
-d3.json(foodURL, function(response) {
 
-    // var parentGroup = L.markerClusterGroup()
+var URL = "https://opendata.arcgis.com/datasets/898c91b2d8f046608a4df64de8d36649_3.geojson";
 
-    // Create feature group
-    food = L.featureGroup(getArrayOfMarkers())
+// Grab our GeoJSON data for transportation
+d3.json(URL, function(data) {
 
-    // test = L.featureGroup.subGroup(
-    //     parentGroup,
-    //     getArrayOfMarkers()
-    // )
+    var metroIcon = new L.Icon({
+        iconUrl: '/static/png/bus.png',
+        iconSize: [27, 27],
+        iconAnchor: [13, 27],
+        popupAnchor: [1, -24]
 
-    //Create function to get an array of the lat and lon
-    function getArrayOfMarkers() {
-        var result = [];
-        // var popup = [];
+    })
 
-        // Loop through data
-        for (var i = 0; i < response.length; i++) {
+    var bus_style = {
+        "color": "#ff7800",
+        "weight": 5,
+        "opacity": 0.65
+    };
+    // Create a GeoJSON layer with the retrieved data
+    // L.geoJson((data), {icon:metroIcon}).addTo(myMap)
+    // var bus = L.geoJson((data), {
+    //     pointToLayer: function(feature, latlag) {
+    //         return L.marker(latlag, { icon: metroIcon }) //.addTo(myMap)
+    //     }
+    // })
 
-            // Set the data location property to a variable
-            var lat = response[i].Latitude;
-            var lon = response[i].Longitude;
-            // console.log(lat)
-
-            // Check for location property
-            if (lat) {
-
-                //Icon for hospital markers
-                var foodIcon = new L.Icon({
-                    iconSize: [27, 27],
-                    iconAnchor: [13, 27],
-                    popupAnchor: [1, -24],
-                    iconUrl: '../png/carrot.png'
-                });
-
-                result.push(L.marker([lat, lon], { icon: foodIcon }))
-                    // popup.push(L.marker.bindPopup(response[i].Name));
-                    // result.push([lat, lon])
-
-            }
-
+    bus = L.geoJson(data, {
+        pointToLayer: function(feature, latlng) {
+            return L.marker(latlag, bus_style);
         }
 
-        return result;
-    }
-});
-//Set up health distric boundries
+    });
 
+})
 
 // var link = "../data/hd.geojson"
 var link = "https://opendata.arcgis.com/datasets/421da90ceff246d08436a17b05818f45_3.geojson"
 
 d3.json(link, function(data) {
-    console.log(data)
+    // console.log(data)
     health_districts = L.geoJson(data, {
             style: function(feature) {
                 return {
                     color: "Grey", //chooseColor(feature.properties.SPA_2012),
-                    //fillColor: "blue", //chooseColor(feature.properties.borough),
                     fillOpacity: .2,
                     weight: 2
                 }
@@ -256,10 +245,10 @@ d3.json(link, function(data) {
         }) //.addTo(myMap)
 
     // Sending income, districts, and spa layer to the createMap function
-    createMap(health_districts, spa, facilities, hospitals, food);
+    createMap(health_districts, spa, facilities, hospitals, bus);
 });
 
-function createMap(health_districts, spa, facilities, hospitals, food) {
+function createMap(health_districts, spa, facilities, hospitals, bus) {
 
     // Create tile layer
 
@@ -297,7 +286,7 @@ function createMap(health_districts, spa, facilities, hospitals, food) {
         "Service Planning Area": spa,
         "Community Health Clinics": facilities,
         "Hospitals": hospitals,
-        "Food Pantries": food
+        "Transportation": bus
 
     };
 
@@ -309,16 +298,14 @@ function createMap(health_districts, spa, facilities, hospitals, food) {
             watercolormap,
             health_districts,
             spa,
-            facilities,
-            hospitals,
-            food
+            hospitals
         ]
     });
 
 
     // Create a layer control, pass in the baseMaps and overlayMaps. Add the layer control to the map
     L.control.layers(baseMaps, overlays, {
-        collapsed: false
+        collapsed: true
     }).addTo(myMap);
 
 }
