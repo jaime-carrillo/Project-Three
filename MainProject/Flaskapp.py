@@ -30,14 +30,13 @@ Base.prepare(engine, reflect=True)
 
 # Save reference to the table
 Hospitals = Base.classes.hospitals
-Licensed  = Base.classes.LosAnglesCountyLicData
+Licensed  = Base.classes.All_Facilities
 Encounters = Base.classes.hospMergedwithTarget
 spa = Base.classes.hospMergedwithTarget
 Ed = Base.classes.LA_ed_data
 Food = Base.classes.Food_Pantry
 Access = Base.classes.AccessToCare
 Profiles = Base.classes.Health_Profiles
-Enrolled = Base.classes.Enrolled_MediCal
 
 #################################################
 # Flask Setup
@@ -64,7 +63,6 @@ def welcome():
         f"/api/v1.0/food<br/>"
         f"/api/v1.0/hd<br/>"
         f"/api/v1.0/profiles<br/>"
-        f"/api/v1.0/enrolled<br/>"
     )
 
 
@@ -140,21 +138,21 @@ def facilities():
 
     """Return a list of dates for each prcp value"""
     # Query all dates and tobs
-    results = session.query(Licensed.OSHPD_ID, Licensed.FACILITY_NAME, Licensed.LATITUDE, Licensed.LONGITUDE, Licensed.LICENSE_CATEGORY_DESC ).\
-        filter(Licensed.LICENSE_CATEGORY_DESC == "Community Clinic").\
-        order_by(Licensed.OSHPD_ID).all()
+    results = session.query(Licensed.FAC_NO, Licensed.FAC_NAME, Licensed.LATITUDE, Licensed.LONGITUDE, Licensed.LIC_CAT, Licensed.Target).\
+        order_by(Licensed.Target).all()
 
     session.close()
 
     # Create a dictionary from the row data and append to a list of all_facilities
     all_facilities = []
-    for id, name, lat, lon, type in results:
+    for id, name, lat, lon, type, target in results:
         facilities_dict = {}
         facilities_dict["Id"] = id
         facilities_dict["Name"] = name
         facilities_dict["LATITUDE"] = lat
         facilities_dict["LONGITUDE"] = lon
         facilities_dict["Type"] = type
+        facilities_dict["Target"] = target
         all_facilities.append(facilities_dict)
 
     return jsonify(all_facilities)
@@ -318,29 +316,6 @@ def profiles():
 
     return jsonify(all_proflies)
 
-
-@app.route("/api/v1.0/enrolled")
-def enrolled():
-    # Create our session (link) from Python to the DB
-    session = Session(engine)
-
-    """Return a list of dates for each prcp value"""
-    # Query all dates and tobs
-    results = session.query(Enrolled.Latitude, Enrolled.Longitude, Enrolled.Provider_Legal_Name, Enrolled.Provider_Type_Code_Desc).all()
-
-    session.close()
-
-    # Create a dictionary from the row data and append to a list of all_facilities
-    all_enrolled = []
-    for lat, lon, name, type in results:
-        enrolled_dict = {}
-        enrolled_dict["Name"] = name
-        enrolled_dict["LATITUDE"] = lat
-        enrolled_dict["LONGITUDE"] = lon
-        enrolled_dict["Type"] = type
-        all_enrolled.append(enrolled_dict)
-
-    return jsonify(all_enrolled)
 
 #################################################
 # Code to run app
