@@ -79,48 +79,47 @@ function getValues(id) {
         // Create bar chart
         //#############################################################
 
-        // Create trace for ED visits (1)
+       
+        // Create trace for hospital size (1)
+        // var trace1 = {
+        //     x: hospType,
+        //     y: visits,
+        //     name: 'ED Visits',
+        //     type: 'bar',
+        //     // text: values.map(String),
+        //     // textposition: 'auto',
+        //     hoverinfo: 'none',
+        //     marker: {
+        //         color: 'orange',
+        //         opacity: 0.5,
+        //         line: {
+        //             color: 'rgb(8,48,107)',
+        //             width: 1.5
+        //         }
+        //     }
+        // };
+        // console.log(labels);
 
-        // Create trace for hospital size (2)
-        var trace1 = {
-            x: hospType,
-            y: labels,
-            name: 'Hospital Type',
-            type: 'bar',
-            // text: hospType.map(String),
-            // textposition: 'auto',
-            hoverinfo: 'none',
-            marker: {
-                color: 'orange',
-                opacity: 0.5,
-                line: {
-                    color: 'rgb(8,48,107)',
-                    width: 1.5
-                }
-            }
-        };
-        console.log(labels);
-
-        var trace2 = {
-            x: hospSize,
-            y: labels,
-            name: 'Hospital Size',
-            type: 'bar',
-            text: hospSize.map(
-                hospSize => `${hospSize}`
-            ),
-            // textposition: 'auto',
-            hoverinfo: 'none',
-            marker: {
-                color: 'rgb(15,185,161)',
-                opacity: 0.5,
-                line: {
-                    color: 'rgb(8,48,107)',
-                    width: 1.5
-                }
-            }
-        };
-        console.log(hospSize);
+        // var trace2 = {
+        //     x: hospSize,
+        //     y: visits,
+        //     name: 'Hospital Size',
+        //     type: 'bar',
+        //     text: hospSize.map(
+        //         hospSize => `${hospSize}`
+        //     ),
+        //     // textposition: 'auto',
+        //     hoverinfo: 'none',
+        //     marker: {
+        //         color: 'rgb(15,185,161)',
+        //         opacity: 0.5,
+        //         line: {
+        //             color: 'rgb(8,48,107)',
+        //             width: 1.5
+        //         }
+        //     }
+        // };
+        // console.log(hospSize);
         
         var trace3 = {
             x: labels,
@@ -177,39 +176,39 @@ function getValues(id) {
             }
         };
         // Create the data array for our plot
-        var data1 = [trace1];
-        var data2 = [trace2];
+        // var data1 = [trace1];
+        // var data2 = [trace2];
         var data3 = [trace3, trace4, trace5];
 
         // Define the plot layout
-        var layout = {
-            title: "All Hospitals",
-            xaxis: {
-                tickmode: "none",
-                showticklabels: "false",
-                zeroline: "false"
-            },
-            yaxis: {
-                tickmode: "none",
-                showticklabels: "false",
-            },
-            height: 275,
-            width: 375
-        };
+        // var layout = {
+        //     title: "All Hospitals",
+        //     xaxis: {
+        //         tickmode: "none",
+        //         showticklabels: "false",
+        //         zeroline: "false"
+        //     },
+        //     yaxis: {
+        //         tickmode: "none",
+        //         showticklabels: "false",
+        //     },
+        //     height: 275,
+        //     width: 375
+        // };
 
-        var layout2 = {
-            title: "All Hospitals",
-            yaxis: {
-                // nticks: 0,
-            },
-            height: 500,
-            width: 1100
-        };
+        // var layout2 = {
+        //     title: "All Hospitals",
+        //     yaxis: {
+        //         // nticks: 0,
+        //     },
+        //     height: 500,
+        //     width: 1100
+        // };
 
-        // Plot the chart to a div tag with id "bar"
-        Plotly.newPlot("bar1", data1, layout);
-        Plotly.newPlot("bar2", data2, layout);
-        Plotly.newPlot("bar3", data3, layout2);
+        // // Plot the chart to a div tag with id "bar"
+        // Plotly.newPlot("bar1", data1, layout);
+        // Plotly.newPlot("bar2", data2, layout);
+        // Plotly.newPlot("bar3", data3, layout2);
 
         
 
@@ -269,8 +268,8 @@ function getData(id) {
             .append("h6").text("Licensed Beds: " + info[0].licensed_bed_size + "\n")
             .append("h6").text("Hispanics: " + info[0].HispanicorLatino + "\n")
             .append("h6").text("Medi-Cal: " + info[0].Medi_Cal)
-            .append("h6").text("Self_Pay: " + info[0].SelfPay)
-            .append("h6").text("Zip Code: " + info[0].DBA_ZIP_CODE)
+            // .append("h6").text("Self_Pay: " + info[0].SelfPay)
+            // .append("h6").text("Zip Code: " + info[0].DBA_ZIP_CODE)
             // .append("h6").text("Food Insecurity: " + info[0].Food_insecurity)
             // .append("h6").text("Health Index: " + info[0].Health_index)
 
@@ -280,88 +279,88 @@ function getData(id) {
         //#############################################################
 
         // Enter a speed between 0 and 180
-        // var level = info[0].Health_index * 1.71
+        var level = info[0].ED_Visit * 1.71
 
         // Trig to calc meter point
-        // var degrees = 180 - level,
-        //     radius = .5;
-        // var radians = degrees * Math.PI / 180;
-        // var x = radius * Math.cos(radians);
-        // var y = radius * Math.sin(radians);
-        // var path1 = (degrees < 45 || degrees > 135) ? 'M -0.0 -0.025 L 0.0 0.025 L ' : 'M -0.025 -0.0 L 0.025 0.0 L ';
+        var degrees = 180 - level,
+            radius = .5;
+        var radians = degrees * Math.PI / 180;
+        var x = radius * Math.cos(radians);
+        var y = radius * Math.sin(radians);
+        var path1 = (degrees < 45 || degrees > 135) ? 'M -0.0 -0.025 L 0.0 0.025 L ' : 'M -0.025 -0.0 L 0.025 0.0 L ';
         // // Path: may have to change to create a better triangle
-        // var mainPath = path1,
-        //     pathX = String(x),
-        //     space = ' ',
-        //     pathY = String(y),
-        //     pathEnd = ' Z';
-        // var path = mainPath.concat(pathX, space, pathY, pathEnd);
+        var mainPath = path1,
+            pathX = String(x),
+            space = ' ',
+            pathY = String(y),
+            pathEnd = ' Z';
+        var path = mainPath.concat(pathX, space, pathY, pathEnd);
 
         // //Create data for dynamic guage
-        // var data2 = [{
-        //         type: 'scatter',
-        //         x: [0],
-        //         y: [0],
-        //         marker: { size: 14, color: '850000' },
-        //         showlegend: false,
-        //         name: 'Index',
-        //         text: info[0].Health_index,
-        //         hoverinfo: 'text+name'
-        //     },
-        //     {
-        //         values: [1, 1, 1, 1, 1, 1, 6],
-        //         rotation: 90,
-        //         text: ['100', '80', '60', '40', '20', '0', ''],
-        //         textinfo: 'text',
-        //         textposition: 'inside',
-        //         marker: {
-        //             colors: ['#8ebe6b', '#9fc97f', '#b2d494', '#c5dea8', '#dae7bd', '#f1f1d2',
-        //                 'rgba(0, 0, 0, 0)'
-        //             ]
-        //         },
-        //         hoverinfo: 'label',
-        //         hole: .5,
-        //         type: 'pie',
-        //         showlegend: false
-        //     }
-        // ];
+        var data2 = [{
+                type: 'scatter',
+                x: [0],
+                y: [0],
+                marker: { size: 14, color: '850000' },
+                showlegend: false,
+                name: 'Index',
+                text: info[0].ED_Visit,
+                hoverinfo: 'text+name'
+            },
+            {
+                values: [1, 1, 1, 1, 1, 1, 6],
+                rotation: 90,
+                text: ['100', '80', '60', '40', '20', '0', ''],
+                textinfo: 'text',
+                textposition: 'inside',
+                marker: {
+                    colors: ['#8ebe6b', '#9fc97f', '#b2d494', '#c5dea8', '#dae7bd', '#f1f1d2',
+                        'rgba(0, 0, 0, 0)'
+                    ]
+                },
+                hoverinfo: 'label',
+                hole: .5,
+                type: 'pie',
+                showlegend: false
+            }
+        ];
 
         // //Create layout for dynamic guage
-        // var layout2 = {
-        //     shapes: [{
-        //         type: 'path',
-        //         path: path,
-        //         fillcolor: 'rgba(0, 0, 0, 0)',
-        //         line: {
-        //             color: '850000'
-        //         }
-        //     }],
-        //     title: info[0].GEONAME,
-        //     subtitle: 'Plot Subtitle',
-        //     height: 370,
-        //     width: 370,
-        //     xaxis: {
-        //         zeroline: false,
-        //         showticklabels: false,
-        //         showgrid: false,
-        //         range: [-1, 1],
-        //         titlefont: {
-        //             title: 'x Axis',
-        //             family: 'Courier New, monospace',
-        //             size: 18,
-        //             color: '#7f7f7f'
-        //         }
-        //     },
-        //     yaxis: {
-        //         zeroline: false,
-        //         showticklabels: false,
-        //         showgrid: false,
-        //         range: [-1, 1]
-        //     }
-        // };
+        var layout2 = {
+            shapes: [{
+                type: 'path',
+                path: path,
+                fillcolor: 'rgba(0, 0, 0, 0)',
+                line: {
+                    color: '850000'
+                }
+            }],
+            title: info[0].facility_name,
+            subtitle: 'Plot Subtitle',
+            height: 370,
+            width: 370,
+            xaxis: {
+                zeroline: false,
+                showticklabels: false,
+                showgrid: false,
+                range: [-1, 1],
+                titlefont: {
+                    title: 'x Axis',
+                    family: 'Courier New, monospace',
+                    size: 18,
+                    color: '#7f7f7f'
+                }
+            },
+            yaxis: {
+                zeroline: false,
+                showticklabels: false,
+                showgrid: false,
+                range: [-1, 1]
+            }
+        };
 
-        //Plot dynamic gauge chart
-        // Plotly.newPlot('gauge1', data2, layout2);
+        // Plot dynamic gauge chart
+        Plotly.newPlot('gauge1', data2, layout2);
 
         //#############################################################
         // Cards for Hospital Types and Size
