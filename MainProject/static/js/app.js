@@ -34,6 +34,8 @@ function getValues(id) {
         lat = []
         long = []
         target = []
+        urgent = []
+        nonUrgent = []
 
         //Create loop to append to each array for charting
         importedData.forEach(function(obj) {
@@ -82,145 +84,16 @@ function getValues(id) {
             var target = obj.Target
             tgt.push(target)
 
+            var urg = obj.UrgnetVisits
+            tgt.push(urg)
+
+            var nonUrg = obj.NonUrgnetVisits
+            tgt.push(nonUrg)
+
+
         });
-
-        //#############################################################
-        // Create bar chart
-        //#############################################################
-
-       
-        // Create trace for Hispanic vs Non-Hispanic
-        var trace1 = {
-            x: labels,
-            y: Hispanics,
-            name: 'Hispanics',
-            type: 'pie',
-            // text: values.map(String),
-            // textposition: 'auto',
-            hoverinfo: 'none',
-            marker: {
-                color: 'orange',
-                opacity: 0.5,
-                line: {
-                    color: 'rgb(8,48,107)',
-                    width: 1.5
-                }
-            }
-        };
-        // console.log(labels);
-
-        var trace2 = {
-            x: labels,
-            y: NonHispanics,
-            name: 'Non Hispanic',
-            type: 'pie',
-            text: hospSize.map(
-                hospSize => `${hospSize}`
-            ),
-            // textposition: 'auto',
-            hoverinfo: 'none',
-            marker: {
-                color: 'rgb(15,185,161)',
-                opacity: 0.5,
-                line: {
-                    color: 'rgb(8,48,107)',
-                    width: 1.5
-                }
-            }
-        };
-        // console.log(hospSize);
         
-        // var trace3 = {
-        //     x: labels,
-        //     y: visits,
-        //     name: 'Visits',
-        //     type: 'bar',
-        //     // text: visits.map(String),
-        //     textposition: 'auto',
-        //     hoverinfo: 'True',
-        //     // hovertemplate: "%{y}",
-        //     marker: {
-        //         color: 'rgb(8,68,202)',
-        //         opacity: 0.5,
-        //         line: {
-        //             color: 'rgb(8,48,107)',
-        //             width: 1.5
-        //         }
-        //     }
-        // };
-
-        // var trace1 = {
-        //     x: labels,
-        //     y: medical,
-        //     name: 'Medi-Cal',
-        //     type: 'bar',
-        //     // text: medical.map(String),
-        //     textposition: 'auto',
-        //     hoverinfo: 'True',
-        //     marker: {
-        //         color: 'rgb(239,22,17)',
-        //         opacity: 0.5,
-        //         line: {
-        //             color: 'rgb(8,48,107)',
-        //             width: 1.5
-        //         }
-        //     }
-        // };
-
-        // var trace2 = {
-        //     x: labels,
-        //     y: Hispanics,
-        //     name: 'Hispanics',
-        //     type: 'bar',
-        //     // text: Hispanics.map(String),
-        //     textposition: 'auto',
-        //     hoverinfo: 'True',
-        //     marker: {
-        //         color: 'rgb(43,232,241)',
-        //         opacity: 1.5,
-        //         line: {
-        //             color: 'rgb(8,48,107)',
-        //             width: 1.5
-        //         }
-        //     }
-        // };
-        // // Create the data array for our plot
-        // var data1 = [trace1, trace2];
-        // var data2 = [trace2];
-        // var data3 = [trace3, trace4, trace5];
-
-        // Define the plot layout
-        // var layout2 = {
-        //     title: "All Hospitals",
-        //     xaxis: {
-        //         tickmode: "none",
-        //         showticklabels: "false",
-        //         zeroline: "false"
-        //     },
-        //     yaxis: {
-        //         tickmode: "none",
-        //         showticklabels: "false",
-        //     },
-        //     height: 275,
-        //     width: 375
-        // };
-
-        // var layout2 = {
-        //     title: "All Hospitals",
-        //     yaxis: {
-        //         // nticks: 0,
-        //     },
-        //     height: 500,
-        //     width: 1100
-        // };
-
-        // // Plot the chart to a div tag with id "bar"
-        // Plotly.newPlot("bar1", data1, layout);
-        // Plotly.newPlot("bar2", data2, layout);
-        // Plotly.newPlot("bar3", data3, layout2);
-
         
-
     })
 }
 
@@ -247,6 +120,8 @@ function getData(id) {
             profile_dict["Beds"] = obj.Beds
             profile_dict["SelfPay"] = obj.SelfPay
             profile_dict["Target"] = obj.Target
+            profile_dict["urgent"] = obj.SelfPay
+            profile_dict["nonUrgent"] = obj.Target
                 
 
             //Push to array
@@ -273,6 +148,7 @@ function getData(id) {
         demoInfo.append("h4").text(info[0].facility_name)
             // .append("h4").text("Name: " + info[0].facility_name)
             .append("h4").text("Total ED Visits: " + info[0].ED_Visit + "\n")
+            .append("h4").text(": " + info[0].ED_Visit + "\n")
             .append("h4").text("Target: " + info[0].Target + "\n")
             .append("h5").text("Type of Hospital: " + info[0].Type + "\n")
             .append("h5").text("Licensed Beds: " + info[0].Beds + "\n")
@@ -283,7 +159,7 @@ function getData(id) {
         //#############################################################
 
         // Enter a speed between 0 and 180
-        var level = info[0].Target * 10000
+        var level = info[0].Target * 75
 
         // Trig to calc meter point
         var degrees = 180 - level,
