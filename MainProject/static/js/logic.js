@@ -11,19 +11,19 @@ function chooseColor(objectid) {
         case "1":
             return "#d73027";
         case "2":
-            return "#1a9850";
-        case "3":
-            return "#91cf60";
-        case "4":
             return "#d9ef8b";
-        case "5":
-            return "#1a9850";
-        case "6":
-            return "#1a9850";
-        case "7":
+        case "3":
             return "#fc8d59";
-        case "8":
+        case "4":
             return "#91cf60";
+        case "5":
+            return "#fc8d59";
+        case "6":
+            return "#d9ef8b";
+        case "7":
+            return "#1a9850";
+        case "8":
+            return "#1a9850";
         default:
             return "grey";
     }
@@ -32,21 +32,28 @@ function chooseColor(objectid) {
 function getTarget(objectid) {
     switch (objectid) {
         case "1":
-            return "96.2%"; //#d73027
+            return " (41.9%)"; //#d73027  Worst 5
         case "2":
-            return "85.6%"; //#1a9850
+            return " (34.0%)"; //d9ef8b 3
         case "3":
-            return "84.8%"; //#91cf60
+            return " (38.3%)"; //fc8d59 4
         case "4":
-            return "83.1%"; //d9ef8b
+            return " (32.8%)"; //#91cf60 2
         case "5":
-            return "85.3%"; //#1a9850
+            return " (36.1%)"; //fc8d59 4
         case "6":
-            return "88.4%"; //fc8d59
+            return " (33.4%)"; //d9ef8b 3
         case "7":
-            return "85.7%"; //#1a9850
+            return " (31.6%)"; //#1a9850 Best 1
         case "8":
-            return "84.7%"; //#91cf60
+            return " (31.5%)"; //#1a9850 Best 1
+
+            //#1a9850 Best 1
+            //#91cf60 2
+            //d9ef8b 3
+            //fc8d59 4
+            //#d73027  Worst 5
+
         default:
             return "grey";
     }
@@ -89,9 +96,6 @@ d3.json(spa_link, function(spa_data) {
 
 // Store API query variables
 var facURL = baseURL + "/api/v1.0/facilities";
-// var hosURL = baseURL + "/api/v1.0/hospitals";
-var hosURL = baseURL + "/api/v1.0/encounters";
-
 
 // Grab the data with d3
 d3.json(facURL, function(response) {
@@ -111,8 +115,8 @@ d3.json(facURL, function(response) {
             // Set the data location property to a variable
             var lat = response[i].LATITUDE;
             var lon = response[i].LONGITUDE;
-            var newwidthfac = response[i].Target * 100;
-            var newheightfac = response[i].Target * 100;
+            var newwidthfac = response[i].Target * 150;
+            var newheightfac = response[i].Target * 150;
 
             function chooseImage(clinic) {
                 switch (clinic) {
@@ -144,6 +148,8 @@ d3.json(facURL, function(response) {
     }
 });
 
+// var hosURL = baseURL + "/api/v1.0/hospitals";
+var hosURL = baseURL + "/api/v1.0/encounters";
 
 // Grab the data with d3
 d3.json(hosURL, function(response) {
@@ -170,8 +176,8 @@ d3.json(hosURL, function(response) {
             // Set the data location property to a variable
             var lat = response[i].LATITUDE;
             var lon = response[i].LONGITUDE;
-            var newwidth = response[i].Target * 100;
-            var newheight = response[i].Target * 100;
+            var newwidth = response[i].Target_1 * 150;
+            var newheight = response[i].Target_1 * 150;
             console.log(response[0].Target);
 
             // Check for location property
@@ -214,13 +220,6 @@ d3.json(URL, function(data) {
         "weight": 5,
         "opacity": 0.65
     };
-    // Create a GeoJSON layer with the retrieved data
-    // L.geoJson((data), {icon:metroIcon}).addTo(myMap)
-    // var bus = L.geoJson((data), {
-    //     pointToLayer: function(feature, latlag) {
-    //         return L.marker(latlag, { icon: metroIcon }) //.addTo(myMap)
-    //     }
-    // })
 
     bus = L.geoJson(data, {
         pointToLayer: function(feature, latlng) {

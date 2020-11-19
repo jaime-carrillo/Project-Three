@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Health District Proflies</title>
+    <title>Hospital Encounters</title>
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
     <!-- CSS -->
     <!-- <link rel="stylesheet" type="text/css" href="../Biodiversity/css/style.css"> -->
@@ -25,13 +25,13 @@
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="nav navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="../../ed.html">Emergency Rooms</a>
+                        <a class="nav-link" href="ed.html">Emergency Rooms</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="lamap.html">Map</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="static/html/results.html">Results</a>
+                        <a class="nav-link" href="#">Results</a>
                     </li>
                 </ul>
             </div>
@@ -40,61 +40,57 @@
 
     <!-- Set section for jumbotron -->
     <div class="jumbotron text-white jumbotron-image shadow" style="background-image: url(https://healthtechmagazine.net/sites/healthtechmagazine.net/files/styles/cdw_hero/public/articles/%5Bcdw_tech_site%3Afield_site_shortname%5D/201810/HET_Q418_EdLetter-HERO.jpg?itok=zSAInqEg)">
-        <h1 class="display-1">Health District Proflies</h1>
-        <h2>Use the interactive charts below to explore the dataset</h2>
+        <h1 class="display-1">Emergency Department Visits</h1>
+        <h2>Research suggests that nearly 30% of ED visits “could be managed in physician offices, clinics and urgent care centers” (Weinick, Burns, & Mehro, 2010)</h2>
         <hr style="border: 1px solid whitesmoke;">
-        <p><a type="button" class="btn btn-info btn-lg" href="lamap.html" role="button">Go to Map!</a></p>
+        <!-- <p>Click the button below to get the latest data about Mars.</p> -->
+        <!-- <p><a type="button" class="btn btn-info btn-lg" href="lamap.html" role="button">Go to Map!</a></p> -->
     </div>
 
     <!-- Set section for card deck -->
     <div class="card-deck">
         <div class="card text-white bg-info mb-3">
             <div class="card-body">
-                <h5 class="card-title">Health Districts</h5>
-                <select id="selDataset" onchange="optionChanged(this.value)"></select>
-                <p class="card-text">Select the district above to update the information below</p>
-                <h3 class="panel-title">Demographic Info</h3>
-                <p class="card-text">Indicators includes diverse non-medical economic, social, political and environmental factors that influence physical and cognitive function, behavior and disease. These factors are often called health determinants or social determinants
-                    of health and form the root causes of disadvantage. </p>
-                <div id="sample-metadata" class="panel-body"></div>
+                <h4 class="card-title">Image 1</h4>
+                <p class="card-text">Blah Blah Blah</p>
+                <a href="#" class="btn btn-light">Open Image</a>
+                <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
             </div>
         </div>
         <div class="card border-info mb-3">
             <div class="card-body">
-                <h5 class="card-title">Health Index
-                </h5>
-                <p class="card-text">This report presents a snapshot of the health of the population of Los Angeles County overall and in each of the county's eight SPAs. Health indicators in this report include health risk behaviors, limited access to services, and health
-                    damaging social, economic, and environmental conditions.</p>
-                <div id="gauge1"></div>
-                <a href="https://www.phi.org/thought-leadership/the-california-healthy-places-index/" class="btn btn-primary">More Info</a>
+                <h4 class="card-title">Image 2</h4>
+                <p class="card-text">Blah Blah Blah</p>
+                <a href="#" class="btn btn-info">Open Image</a>
+                <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
             </div>
         </div>
         <div class="card border-info mb-3">
             <div class="card-body">
-                <h5 class="card-title">Health Index Average</h5>
-                <p class="card-text">The California Healthy Places Index (HPI), a resource developed by the Public Health Alliance of Southern California, is a powerful new tool that can be used to explore community conditions that predict life expectancy, compare and rank
-                    scores at multiple geographies, and learn about concrete and actionable policy solutions.</p>
-                <div id="gauge2"></div>
-                <a href="https://www.phi.org/thought-leadership/the-california-healthy-places-index/" class="btn btn-primary ">More Info</a>
+                <h4 class="card-title">Image 3</h4>
+                <p class="card-text">Blah Blah Blah</p>
+                <a href="#" class="btn btn-info">Open Image</a>
+                <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
             </div>
         </div>
     </div>
-
-    <div class="container" style="margin-top:60px">
-        <div class="card" style="width: 70rem" style="height: 50rem">
-            <div class="card-body">
-                <h5 class="card-title">Social Determinates of Health by District</h5>
-                <div id="bar"></div>
-
-                <!-- <a href="https://www.phi.org/thought-leadership/the-california-healthy-places-index/" class="btn btn-primary">More Info</a> -->
-            </div>
+    <!-- Set Section for Approach -->
+    <div class="card">
+        <h5 class="card-header">Our conclusions</h5>
+        <div class="card-body">
+            <h5 class="card-title">Results</h5>
+            <p class="card-text">Blah Blah Blah</p>
+            <h5 class="card-title">Results</h5>
+            <p class="card-text">Blah Blah Blah</p>
+            <!-- <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4156292/" class="btn btn-info">See the article in PMC </a> -->
         </div>
     </div>
+
 
     <!-- javascript references  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js "></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js "></script>
-    <script src="../js/app_profiles.js"></script>
+    <script src="static/js/logic.js"></script>
 
     <!-- Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
