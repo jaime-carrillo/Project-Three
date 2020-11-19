@@ -9,21 +9,44 @@ var spa_link = "../data/spa.geojson"
 function chooseColor(objectid) {
     switch (objectid) {
         case "1":
-            return "#fee08b";
+            return "#d73027";
         case "2":
-            return "#fc8d59";
+            return "#1a9850";
         case "3":
-            return "#d9ef8b";
+            return "#91cf60";
         case "4":
             return "#d9ef8b";
         case "5":
-            return "#d73027";
+            return "#1a9850";
         case "6":
             return "#1a9850";
         case "7":
-            return "#91cf60";
+            return "#fc8d59";
         case "8":
             return "#91cf60";
+        default:
+            return "grey";
+    }
+}
+
+function getTarget(objectid) {
+    switch (objectid) {
+        case "1":
+            return "96.2%"; //#d73027
+        case "2":
+            return "85.6%"; //#1a9850
+        case "3":
+            return "84.8%"; //#91cf60
+        case "4":
+            return "83.1%"; //d9ef8b
+        case "5":
+            return "85.3%"; //#1a9850
+        case "6":
+            return "88.4%"; //fc8d59
+        case "7":
+            return "85.7%"; //#1a9850
+        case "8":
+            return "84.7%"; //#91cf60
         default:
             return "grey";
     }
@@ -59,7 +82,7 @@ d3.json(spa_link, function(spa_data) {
                         //     myMap.fitBounds(event.target.getBounds())
                         // }
                 });
-                layer.bindPopup("<h1>" + feature.properties.SPA_NAME + "</h1>") //AREA_NAME spa_name
+                layer.bindPopup("<h1>" + feature.properties.spa_name + getTarget(feature.properties.objectid) + "</h1>") //AREA_NAME spa_name
             }
         }) //.addTo(myMap)
 });
@@ -88,8 +111,8 @@ d3.json(facURL, function(response) {
             // Set the data location property to a variable
             var lat = response[i].LATITUDE;
             var lon = response[i].LONGITUDE;
-            var newwidthfac = response[i].Target * 200;
-            var newheightfac = response[i].Target * 200;
+            var newwidthfac = response[i].Target * 100;
+            var newheightfac = response[i].Target * 100;
 
             function chooseImage(clinic) {
                 switch (clinic) {
@@ -147,9 +170,9 @@ d3.json(hosURL, function(response) {
             // Set the data location property to a variable
             var lat = response[i].LATITUDE;
             var lon = response[i].LONGITUDE;
-            var newwidth = response[i].Target * 1000;
-            var newheight = response[i].Target * 1000;
-            // console.log(lat)
+            var newwidth = response[i].Target * 100;
+            var newheight = response[i].Target * 100;
+            console.log(response[0].Target);
 
             // Check for location property
             if (lat) {

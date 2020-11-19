@@ -111,8 +111,9 @@ def hos_enc():
     # results = session.query(spa.licensed_bed_size, spa.ED_Visit, spa.Target, spa.SPA).\
     #     order_by(spa.OSHPD_ID).all()
 
-    results =  session.query(func.avg(spa.licensed_bed_size), func.avg(spa.ED_Visit), func.avg(spa.Target), spa.SPA).\
-        group_by(spa.SPA)
+    results =  session.query(func.avg(spa.licensed_bed_size), func.avg(spa.ED_Visit), func.avg(spa.Target), func.avg(spa.Target_1), spa.SPA).\
+        group_by(spa.SPA).\
+            order_by(func.avg(spa.Target)).all()
 
     # results = session.query(Hospitals_Encounters.OSHPD_ID, Hospitals_Encounters.LATITUDE).\
     #     order_by(Hospitals_Encounters.OSHPD_ID).all()
@@ -121,11 +122,12 @@ def hos_enc():
     # Create a dictionary from the row data and append to a list of all_hospitals
     all_spas = []
 
-    for bed, visits, target, no in results:
+    for bed, visits, target, target1, no in results:
         spa_dict = {}
         spa_dict["Bed Size"] = bed
         spa_dict["ED Visits"] = visits
-        spa_dict["Target"] = target * 10
+        spa_dict["Target"] = target
+        spa_dict["Target_1"] = target1
         spa_dict["SPA"] = no
         all_spas.append(spa_dict)
 
@@ -165,14 +167,14 @@ def encounters():
 
     """Return a list of dates for each prcp value"""
     # Query all dates and tobs
-    results = session.query(Encounters.oshpd_id, Encounters.facility_name, Encounters.licensed_bed_size, Encounters.control_type_desc,  Encounters.Target, Encounters.LATITUDE, Encounters.LONGITUDE).\
+    results = session.query(Encounters.oshpd_id, Encounters.facility_name, Encounters.licensed_bed_size, Encounters.control_type_desc,  Encounters.Target, Encounters.Target_1, Encounters.LATITUDE, Encounters.LONGITUDE, Encounters.ED_Visit, Encounters.Medi_Cal, Encounters.Medicare, Encounters.Other_Payer, Encounters.SelfPay, Encounters.DX_Symptoms, Encounters.HispanicorLatino, Encounters.NonHis).\
         order_by(Encounters.Target).all()
 
     session.close()
 
     # Create a dictionary from the row data and append to a list of all_facilities
     all_encounters = []
-    for id, name, bed, type, target, lat, lon in results:
+    for id, name, bed, type, target, lat, lon,visits, medical, medicare, other, self, dx, his, non, t1 in results:
         encounters_dict = {}
         encounters_dict["oshpd_id"] = id
         encounters_dict["facility_name"] = name
@@ -181,6 +183,15 @@ def encounters():
         encounters_dict["Target"] = target
         encounters_dict["LATITUDE"] = lat
         encounters_dict["LONGITUDE"] = lon
+        encounters_dict["ED_Visit"] = visits
+        encounters_dict["Medi_Cal"] = medical
+        encounters_dict["Medicare"] = medicare
+        encounters_dict["Other_Payer"] = other
+        encounters_dict["SelfPay"] = self
+        encounters_dict["DX_Symptoms"] = dx
+        encounters_dict["HispanicorLatino"] = his
+        encounters_dict["Non-HispanicorNon-Latino"] = non
+        encounters_dict["Target_1"] = t1
         all_encounters.append(encounters_dict)
 
     return jsonify(all_encounters)
