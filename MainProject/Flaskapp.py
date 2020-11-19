@@ -167,14 +167,14 @@ def encounters():
 
     """Return a list of dates for each prcp value"""
     # Query all dates and tobs
-    results = session.query(Encounters.oshpd_id, Encounters.facility_name, Encounters.licensed_bed_size, Encounters.control_type_desc,  Encounters.Target, Encounters.Target_1, Encounters.LATITUDE, Encounters.LONGITUDE, Encounters.ED_Visit, Encounters.Medi_Cal, Encounters.Medicare, Encounters.Other_Payer, Encounters.SelfPay, Encounters.DX_Symptoms, Encounters.HispanicorLatino, Encounters.NonHis).\
+    results = session.query(Encounters.oshpd_id, Encounters.facility_name, Encounters.licensed_bed_size, Encounters.control_type_desc,  Encounters.Target, Encounters.Target_1, Encounters.LATITUDE, Encounters.LONGITUDE, Encounters.ED_Visit, Encounters.Medi_Cal, Encounters.Medicare, Encounters.Other_Payer, Encounters.SelfPay, Encounters.DX_Symptoms, Encounters.HispanicorLatino, Encounters.NonHis, Encounters.NON_URGENT, Encounters.URGENT).\
         order_by(Encounters.Target).all()
 
     session.close()
 
     # Create a dictionary from the row data and append to a list of all_facilities
     all_encounters = []
-    for id, name, bed, type, target, t1, lat, lon, visits, medical, medicare, other, self, dx, his, non in results:
+    for id, name, bed, type, target, t1, lat, lon, visits, medical, medicare, other, self, dx, his, non, non_urg, urg in results:
         encounters_dict = {}
         encounters_dict["oshpd_id"] = id
         encounters_dict["facility_name"] = name
@@ -192,6 +192,8 @@ def encounters():
         encounters_dict["DX_Symptoms"] = dx
         encounters_dict["HispanicorLatino"] = his
         encounters_dict["Non-HispanicorNon-Latino"] = non
+        encounters_dict["NonUrgnetVisits"] = non_urg
+        encounters_dict["UrgnetVisits"] = urg
         all_encounters.append(encounters_dict)
 
     return jsonify(all_encounters)
