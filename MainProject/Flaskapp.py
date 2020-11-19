@@ -174,13 +174,14 @@ def encounters():
 
     # Create a dictionary from the row data and append to a list of all_facilities
     all_encounters = []
-    for id, name, bed, type, target, lat, lon,visits, medical, medicare, other, self, dx, his, non, t1 in results:
+    for id, name, bed, type, target, t1, lat, lon, visits, medical, medicare, other, self, dx, his, non in results:
         encounters_dict = {}
         encounters_dict["oshpd_id"] = id
         encounters_dict["facility_name"] = name
         encounters_dict["Beds"] = bed
         encounters_dict["Type"] = type
         encounters_dict["Target"] = target
+        encounters_dict["Target_1"] = t1
         encounters_dict["LATITUDE"] = lat
         encounters_dict["LONGITUDE"] = lon
         encounters_dict["ED_Visit"] = visits
@@ -191,7 +192,6 @@ def encounters():
         encounters_dict["DX_Symptoms"] = dx
         encounters_dict["HispanicorLatino"] = his
         encounters_dict["Non-HispanicorNon-Latino"] = non
-        encounters_dict["Target_1"] = t1
         all_encounters.append(encounters_dict)
 
     return jsonify(all_encounters)
