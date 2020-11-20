@@ -35,7 +35,7 @@ function getValues(id) {
         long = []
         tgt = []
         urg = []
-        nonUrg = []
+        non_urg = []
 
         //Create loop to append to each array for charting
         importedData.forEach(function(obj) {
@@ -88,7 +88,7 @@ function getValues(id) {
             urg.push(urgent)
 
             var nonUrgent = obj.NonUrgnetVisits
-            nonUrg.push(nonUrgent)
+            non_urg.push(nonUrgent)
 
 
         });
@@ -124,9 +124,9 @@ function getData(id) {
 
             //Push to array
             demoData.push(profile_dict)
-                // console.log(profile_dict)
+                
         })
-        console.log(id)
+        
 
         //#############################################################
         // define variable to filter data
@@ -134,7 +134,7 @@ function getData(id) {
 
         // Filter by district name
         var info = demoData.filter(d => d.facility_name == id)
-        console.log(info[0].facility_name)
+        console.log(info)
 
         // select demographic data from list
         var demoInfo = d3.select("#sample-metadata");
@@ -240,27 +240,13 @@ function getData(id) {
 
 
         var data2 = [{
-            
-            values: [urg, nonUrg],
             labels: ["Urgent", "Non-Urgent"],
+            values: [info[0]["UrgnetVisits"], info[0]["NonUrgnetVisits"]],
             type: 'pie'
 
 
         }];
             
-            // text: values.map(String),
-            // textposition: 'auto',
-            // hoverinfo: 'none',
-            // marker: {
-            //     color: '#03254c',
-            //     opacity: 0.7,
-            //     line: {
-            //         color: 'rgb(8,48,107)',
-            //         width: 1.5
-            //     }
-            // }
-
-        // var data2 = [trace];
 
         // Define the plot layout
         var layout2 = {
@@ -280,10 +266,10 @@ function getData(id) {
 //#############################################################
 
 function optionChanged(id) {
-    getValues(id);
+   
     getData(id);
 }
-optionChanged()
+// optionChanged()
 //#############################################################
 // create initial function to get data and display plots
 //#############################################################
@@ -307,7 +293,7 @@ function init() {
         })
 
         // call functions to display plot
-        getValues(names[0]);
+       
         getData(names[0]);
 
     })
