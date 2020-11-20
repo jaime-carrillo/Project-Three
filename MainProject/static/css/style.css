@@ -9,6 +9,13 @@ html {
     height: 100%;
 }
 
+h1 {
+    padding: 0;
+    margin: 0;
+}
+
+.card-deck {}
+
 
 /* CSS from the Leaflet-Choropleth documentation */
 
@@ -45,6 +52,7 @@ html {
     float: right;
 }
 
-h1 {
+
+/* h1 {
     text-align: center;
-}
+} */
