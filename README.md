@@ -9,19 +9,20 @@ Our initial approach was to use ML to identify factors that lead to "Frequent Fl
 We used supervised learning, where the goal is to learn the relationship between training inputs and training targets.
 
 ## Requirement #3: You must use: Scikit-Learn and/or another machine learning library
-To explore our ML, open the "python" folder. Here you will see 3 different approaches:
+We tested all our inputs and targets with two differnt libraries:
+- The Sequential model (tensorflow.keras)
+- Scikit-Learn C-Support Vector Classification (sklearn.svm)
 
+To explore our ML, open the "python" folder. Here you will see 3 different approaches:
 - facilities
 - hospitals 
 - patients
 
-for original data sources, see our webpage visualizations
+The facilities models inputted aggregate patient characteristics data to classify clinics into 2 groups (above average or below the group average).  The target was a specific type of patient population (i.e., gender, insurance, age, etc.).
 
-The facilities model inputted aggregate patient characteristics data to classify clinics into 2 groups (above average or below the group average).  The target was a specific type of patient population (i.e., gender, insurance, age, etc.).
+The hospital models inputted aggregate utilization data to classify clinics into 2 groups (above average or below the group average).  The target was the ratio between non-urgent ED visits and urgent visits (to compensate for hospitals' size).  We applied the targets to another dataset containing patient population characteristics (i.e., gender, insurance, age, etc.) 
 
-The hospital model inputted aggregate utilization data to classify clinics into 2 groups (above average or below the group average).  The target was the ratio between non-urgent ED visits and urgent visits (to compensate for hospitals' size).  We applied the targets to another dataset containing patient population characteristics (i.e., gender, insurance, age, etc.) 
-
-The patients model used patient characteristics (per patient) to classify each patient as a potential frequent flyer or not. This model proved not to be supported by enough data.
+The patients models used patient characteristics (per patient) to classify each patient as a potential frequent flyer or not. This model proved not to be supported by enough data.
 
 ## Requirement #4: Technical requirements
 
