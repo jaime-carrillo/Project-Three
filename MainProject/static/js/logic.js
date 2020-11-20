@@ -115,8 +115,8 @@ d3.json(facURL, function(response) {
             // Set the data location property to a variable
             var lat = response[i].LATITUDE;
             var lon = response[i].LONGITUDE;
-            var newwidthfac = response[i].Target * 150;
-            var newheightfac = response[i].Target * 150;
+            var newwidthfac = response[i].Target * 125;
+            var newheightfac = response[i].Target * 125;
 
             function chooseImage(clinic) {
                 switch (clinic) {
@@ -176,8 +176,8 @@ d3.json(hosURL, function(response) {
             // Set the data location property to a variable
             var lat = response[i].LATITUDE;
             var lon = response[i].LONGITUDE;
-            var newwidth = response[i].Target_1 * 150;
-            var newheight = response[i].Target_1 * 150;
+            var newwidth = response[i].Target_1 * 125;
+            var newheight = response[i].Target_1 * 125;
             console.log(response[0].Target);
 
             // Check for location property
@@ -201,34 +201,6 @@ d3.json(hosURL, function(response) {
     }
 });
 
-
-var URL = "https://opendata.arcgis.com/datasets/898c91b2d8f046608a4df64de8d36649_3.geojson";
-
-// Grab our GeoJSON data for transportation
-d3.json(URL, function(data) {
-
-    var metroIcon = new L.Icon({
-        iconUrl: '/static/png/bus.png',
-        iconSize: [27, 27],
-        iconAnchor: [13, 27],
-        popupAnchor: [1, -24]
-
-    })
-
-    var bus_style = {
-        "color": "#ff7800",
-        "weight": 5,
-        "opacity": 0.65
-    };
-
-    bus = L.geoJson(data, {
-        pointToLayer: function(feature, latlng) {
-            return L.marker(latlag, bus_style);
-        }
-
-    });
-
-})
 
 // var link = "../data/hd.geojson"
 var link = "https://opendata.arcgis.com/datasets/421da90ceff246d08436a17b05818f45_3.geojson"
@@ -267,10 +239,10 @@ d3.json(link, function(data) {
         }) //.addTo(myMap)
 
     // Sending income, districts, and spa layer to the createMap function
-    createMap(health_districts, spa, facilities, hospitals, bus);
+    createMap(health_districts, spa, facilities, hospitals);
 });
 
-function createMap(health_districts, spa, facilities, hospitals, bus) {
+function createMap(health_districts, spa, facilities, hospitals) {
 
     // Create tile layer
 
@@ -307,8 +279,7 @@ function createMap(health_districts, spa, facilities, hospitals, bus) {
         "Health Districts": health_districts,
         "Service Planning Area": spa,
         "Community Health Clinics": facilities,
-        "Hospitals": hospitals,
-        "Transportation": bus
+        "Hospitals": hospitals
 
     };
 

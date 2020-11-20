@@ -1,6 +1,6 @@
 // Store API query variables
-// var baseURL = "https://emsmain.herokuapp.com";
-var baseURL = "http://127.0.0.1:5000"
+var baseURL = "https://emsmain.herokuapp.com";
+// var baseURL = "http://127.0.0.1:5000"
 var option = "/api/v1.0/encounters";
 
 // Assemble API query URL
@@ -120,13 +120,13 @@ function getData(id) {
             profile_dict["Target"] = obj.Target
             profile_dict["UrgnetVisits"] = obj.UrgnetVisits
             profile_dict["NonUrgnetVisits"] = obj.NonUrgnetVisits
-                
+
 
             //Push to array
             demoData.push(profile_dict)
-                
+
         })
-        
+
 
         //#############################################################
         // define variable to filter data
@@ -149,13 +149,13 @@ function getData(id) {
             .append("h4").text("Target: " + info[0].Target + "\n")
             .append("h5").text("Type of Hospital: " + info[0].Type + "\n")
             .append("h5").text("Licensed Beds: " + info[0].Beds + "\n")
-           
+
         //#############################################################
         // Gauge for dynamic district
         //#############################################################
 
         // Enter a speed between 0 and 180
-        var level = info[0].Target * 100
+        var level = info[0].Target * 150
 
         // Trig to calc meter point
         var degrees = 180 - level,
@@ -213,7 +213,7 @@ function getData(id) {
             }],
             title: info[0].facility_name,
             subtitle: 'Plot Subtitle',
-            height: 500,
+            height: 550,
             width: 550,
             xaxis: {
                 zeroline: false,
@@ -246,19 +246,19 @@ function getData(id) {
 
 
         }];
-            
+
 
         // Define the plot layout
         var layout2 = {
-            height: 500,
-            width: 500
+            height: 550,
+            width: 550
         };
 
         // Plot the chart to a div tag with id "pie"
         Plotly.newPlot('pie', data2, layout2);
 
     });
-    
+
 };
 
 //#############################################################
@@ -266,7 +266,7 @@ function getData(id) {
 //#############################################################
 
 function optionChanged(id) {
-   
+
     getData(id);
 }
 // optionChanged()
@@ -293,7 +293,7 @@ function init() {
         })
 
         // call functions to display plot
-       
+
         getData(names[0]);
 
     })
