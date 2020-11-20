@@ -33,17 +33,17 @@ function getValues(id) {
         NonHispanics = []
         lat = []
         long = []
-        target = []
-        urgent = []
-        nonUrgent = []
+        tgt = []
+        urg = []
+        nonUrg = []
 
         //Create loop to append to each array for charting
         importedData.forEach(function(obj) {
             var label = obj.facility_name
             labels.push(label)
 
-            var ids = obj.oshpd_id
-            id.push(ids)
+            // var ids = obj.oshpd_id
+            // id.push(ids)
 
             var visit = obj.ED_Visit
             visits.push(visit)
@@ -72,28 +72,26 @@ function getValues(id) {
             var his = obj.HispanicorLatino
             Hispanics.push(his)
 
-            var non = obj.Non-HispanicorNon-Latino
+            var non = obj.NonLatino
             NonHispanics.push(non)
 
-            var lat = obj.LATITUDE
-            Latitude.push(lat)
+            // var lat = obj.LATITUDE
+            // Latitude.push(lat)
 
-            var long = obj.LONGITUDE 
-            longitude.push(long)
+            // var long = obj.LONGITUDE 
+            // longitude.push(long)
 
             var target = obj.Target
             tgt.push(target)
 
-            var urg = obj.UrgnetVisits
-            tgt.push(urg)
+            var urgent = obj.UrgnetVisits
+            urg.push(urgent)
 
-            var nonUrg = obj.NonUrgnetVisits
-            tgt.push(nonUrg)
+            var nonUrgent = obj.NonUrgnetVisits
+            nonUrg.push(nonUrgent)
 
 
         });
-        
-        
     })
 }
 
@@ -120,8 +118,8 @@ function getData(id) {
             profile_dict["Beds"] = obj.Beds
             profile_dict["SelfPay"] = obj.SelfPay
             profile_dict["Target"] = obj.Target
-            profile_dict["urgent"] = obj.SelfPay
-            profile_dict["nonUrgent"] = obj.Target
+            profile_dict["UrgnetVisits"] = obj.UrgnetVisits
+            profile_dict["NonUrgnetVisits"] = obj.NonUrgnetVisits
                 
 
             //Push to array
@@ -148,18 +146,16 @@ function getData(id) {
         demoInfo.append("h4").text(info[0].facility_name)
             // .append("h4").text("Name: " + info[0].facility_name)
             .append("h4").text("Total ED Visits: " + info[0].ED_Visit + "\n")
-            .append("h4").text(": " + info[0].ED_Visit + "\n")
             .append("h4").text("Target: " + info[0].Target + "\n")
             .append("h5").text("Type of Hospital: " + info[0].Type + "\n")
             .append("h5").text("Licensed Beds: " + info[0].Beds + "\n")
            
-
         //#############################################################
         // Gauge for dynamic district
         //#############################################################
 
         // Enter a speed between 0 and 180
-        var level = info[0].Target * 75
+        var level = info[0].Target * 100
 
         // Trig to calc meter point
         var degrees = 180 - level,
@@ -190,7 +186,7 @@ function getData(id) {
             {
                 values: [1, 1, 1, 1, 1, 1, 6],
                 rotation: 90,
-                text: ['1.0', '0.90', '0.80', '0.70', '0.60', '0.50', ''],
+                text: ['0.90', '0.80', '0.70', '0.60', '0.50', '0.40'],
                 textinfo: 'text',
                 textposition: 'inside',
                 marker: {
@@ -242,8 +238,42 @@ function getData(id) {
         // Plot dynamic gauge chart
         Plotly.newPlot('gauge', data, layout);
 
+
+        var data2 = [{
+            
+            values: [urg, nonUrg],
+            labels: ["Urgent", "Non-Urgent"],
+            type: 'pie'
+
+
+        }];
+            
+            // text: values.map(String),
+            // textposition: 'auto',
+            // hoverinfo: 'none',
+            // marker: {
+            //     color: '#03254c',
+            //     opacity: 0.7,
+            //     line: {
+            //         color: 'rgb(8,48,107)',
+            //         width: 1.5
+            //     }
+            // }
+
+        // var data2 = [trace];
+
+        // Define the plot layout
+        var layout2 = {
+            height: 500,
+            width: 500
+        };
+
+        // Plot the chart to a div tag with id "pie"
+        Plotly.newPlot('pie', data2, layout2);
+
     });
-}
+    
+};
 
 //#############################################################
 // create  function for change event
