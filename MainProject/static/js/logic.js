@@ -29,24 +29,34 @@ function chooseColor(objectid) {
     }
 }
 
+function setColor(density) {
+    return density > 85 ? '#a50f15' :
+        density > 15 ? '#de2d26' :
+        density > 8 ? '#fb6a4a' :
+        density > 4 ? '#fcae91' :
+        '#fee5d9';
+};
+
+
+
 function getTarget(objectid) {
     switch (objectid) {
         case "1":
-            return " (41.9%)"; //#d73027  Worst 5
+            return "41.9%"; //#d73027  Worst 5
         case "2":
-            return " (34.0%)"; //d9ef8b 3
+            return "34.0%"; //d9ef8b 3
         case "3":
-            return " (38.3%)"; //fc8d59 4
+            return "38.3%"; //fc8d59 4
         case "4":
-            return " (32.8%)"; //#91cf60 2
+            return "32.8%"; //#91cf60 2
         case "5":
-            return " (36.1%)"; //fc8d59 4
+            return "36.1%"; //fc8d59 4
         case "6":
-            return " (33.4%)"; //d9ef8b 3
+            return "33.4%"; //d9ef8b 3
         case "7":
-            return " (31.6%)"; //#1a9850 Best 1
+            return "31.6%"; //#1a9850 Best 1
         case "8":
-            return " (31.5%)"; //#1a9850 Best 1
+            return "31.5%"; //#1a9850 Best 1
 
             //#1a9850 Best 1
             //#91cf60 2
@@ -89,7 +99,7 @@ d3.json(spa_link, function(spa_data) {
                         //     myMap.fitBounds(event.target.getBounds())
                         // }
                 });
-                layer.bindPopup("<h1>" + feature.properties.spa_name + getTarget(feature.properties.objectid) + "</h1>") //AREA_NAME spa_name
+                layer.bindPopup("<h1>" + feature.properties.spa_name + "</h1> \n" + "<h3> Average Non-Urgent visits for hospitals </h3><h2>" + getTarget(feature.properties.objectid) + "</h2>") //AREA_NAME spa_name
             }
         }) //.addTo(myMap)
 });
@@ -159,16 +169,9 @@ d3.json(hosURL, function(response) {
     // Create feature group
     hospitals = L.featureGroup(getArrayOfMarkers())
 
-    // test = L.featureGroup.subGroup(
-    //     parentGroup,
-    //     getArrayOfMarkers()
-    // )
-
     //Create function to get an array of the lat and lon
-
     function getArrayOfMarkers() {
         var result = [];
-        // var popup = [];
 
         // Loop through data
         for (var i = 0; i < response.length; i++) {
@@ -198,8 +201,12 @@ d3.json(hosURL, function(response) {
         }
 
         return result;
+
+
     }
-});
+
+})
+
 
 
 // var link = "../data/hd.geojson"
@@ -238,7 +245,7 @@ d3.json(link, function(data) {
             }
         }) //.addTo(myMap)
 
-    // Sending income, districts, and spa layer to the createMap function
+    // Sending facilities, hospitals, districts, and spa layer to the createMap function
     createMap(health_districts, spa, facilities, hospitals);
 });
 
@@ -300,5 +307,8 @@ function createMap(health_districts, spa, facilities, hospitals) {
     L.control.layers(baseMaps, overlays, {
         collapsed: true
     }).addTo(myMap);
+
+    // Add Scale Bar to Map
+    L.control.scale({ position: 'topleft' }).addTo(myMap);
 
 }
