@@ -1,6 +1,6 @@
 // Store API query variables
-// var baseURL = "https://emsmain.herokuapp.com";
-var baseURL = "http://127.0.0.1:5000"
+var baseURL = "https://emsmain.herokuapp.com";
+// var baseURL = "http://127.0.0.1:5000"
 var option = "/api/v1.0/encounters";
 
 // Assemble API query URL
@@ -120,13 +120,13 @@ function getData(id) {
             profile_dict["Target"] = obj.Target
             profile_dict["UrgnetVisits"] = obj.UrgnetVisits
             profile_dict["NonUrgnetVisits"] = obj.NonUrgnetVisits
-                
+
 
             //Push to array
             demoData.push(profile_dict)
-                
+
         })
-        
+
 
         //#############################################################
         // define variable to filter data
@@ -143,19 +143,19 @@ function getData(id) {
         demoInfo.html("");
 
         // get demographic data for the name and append to panel
-        demoInfo.append("h4").text(info[0].facility_name)
+        demoInfo.append("h4").text(info[0].facility_name + " (Target = " + info[0].Target + ")")
             // .append("h4").text("Name: " + info[0].facility_name)
-            .append("h4").text("Total ED Visits: " + info[0].ED_Visit + "\n")
-            .append("h4").text("Target: " + info[0].Target + "\n")
+            // .append("h4").text("Target: " + info[0].Target + "\n")
+            .append("h5").text("Total ED Visits: " + info[0].ED_Visit + "\n")
             .append("h5").text("Type of Hospital: " + info[0].Type + "\n")
             .append("h5").text("Licensed Beds: " + info[0].Beds + "\n")
-           
+
         //#############################################################
         // Gauge for dynamic district
         //#############################################################
 
         // Enter a speed between 0 and 180
-        var level = info[0].Target * 100
+        var level = info[0].Target * 175
 
         // Trig to calc meter point
         var degrees = 180 - level,
@@ -184,14 +184,14 @@ function getData(id) {
                 hoverinfo: 'text+name'
             },
             {
-                values: [1, 1, 1, 1, 1, 1, 6],
+                values: [1, 1, 1, 1, 1, 1, 1, 1, 8],
                 rotation: 90,
-                text: ['0.90', '0.80', '0.70', '0.60', '0.50', '0.40'],
+                text: ['0.90', '0.80', '0.70', '0.60', '0.50', '0.40', '0.30', '0.20', ''],
                 textinfo: 'text',
                 textposition: 'inside',
                 marker: {
-                    colors: ['#8ebe6b', '#9fc97f', '#b2d494', '#c5dea8', '#dae7bd', '#f1f1d2',
-                        'rgba(0, 0, 0, 0)'
+                    colors: ['#8a211e', '#c9302c', '#d43f3a', '#d9534f', '#de6764', '#e27c79', '#e7908e',
+                        '#eba6a4', 'rgba(0, 0, 0, 0)'
                     ]
                 },
                 hoverinfo: 'label',
@@ -214,7 +214,7 @@ function getData(id) {
             title: info[0].facility_name,
             subtitle: 'Plot Subtitle',
             height: 500,
-            width: 550,
+            width: 500,
             xaxis: {
                 zeroline: false,
                 showticklabels: false,
@@ -222,7 +222,7 @@ function getData(id) {
                 range: [-1, 1],
                 titlefont: {
                     title: 'x Axis',
-                    family: 'Courier New, monospace',
+                    family: 'Arial, Helvetica, sans-serif',
                     size: 18,
                     color: '#7f7f7f'
                 }
@@ -238,27 +238,33 @@ function getData(id) {
         // Plot dynamic gauge chart
         Plotly.newPlot('gauge', data, layout);
 
+        var ultimateColors = ['#14b5d0', '#d9534f']
 
         var data2 = [{
             labels: ["Urgent", "Non-Urgent"],
             values: [info[0]["UrgnetVisits"], info[0]["NonUrgnetVisits"]],
+            marker: {
+                colors: ultimateColors
+            },
             type: 'pie'
 
 
         }];
-            
+
+
 
         // Define the plot layout
         var layout2 = {
             height: 500,
-            width: 500
+            width: 500,
+            title: info[0].facility_name
         };
 
         // Plot the chart to a div tag with id "pie"
         Plotly.newPlot('pie', data2, layout2);
 
     });
-    
+
 };
 
 //#############################################################
@@ -266,7 +272,7 @@ function getData(id) {
 //#############################################################
 
 function optionChanged(id) {
-   
+
     getData(id);
 }
 // optionChanged()
@@ -293,7 +299,7 @@ function init() {
         })
 
         // call functions to display plot
-       
+
         getData(names[0]);
 
     })

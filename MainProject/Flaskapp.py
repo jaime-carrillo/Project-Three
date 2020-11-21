@@ -167,7 +167,7 @@ def encounters():
 
     """Return a list of dates for each prcp value"""
     # Query all dates and tobs
-    results = session.query(Encounters.oshpd_id, Encounters.facility_name, Encounters.licensed_bed_size, Encounters.control_type_desc,  Encounters.Target, Encounters.Target_1, Encounters.LATITUDE, Encounters.LONGITUDE, Encounters.ED_Visit, Encounters.Medi_Cal, Encounters.Medicare, Encounters.Other_Payer, Encounters.SelfPay, Encounters.DX_Symptoms, Encounters.HispanicorLatino, Encounters.NonHis, Encounters.NON_URGENT, Encounters.URGENT).\
+    results = session.query(Encounters.oshpd_id, Encounters.facility_name, Encounters.licensed_bed_size, Encounters.control_type_desc,  Encounters.Target, Encounters.Target_1, Encounters.LATITUDE, Encounters.LONGITUDE, Encounters.ED_Visit, Encounters.Medi_Cal, Encounters.Medicare, Encounters.Other_Payer, Encounters.SelfPay, Encounters.DX_Symptoms, Encounters.HispanicorLatino, Encounters.NonHis, Encounters.EMS_VISITS_NON_URGENT_TOT, Encounters.EMS_VISITS_URGENT_TOT).\
         order_by(Encounters.Target).all()
 
     session.close()
