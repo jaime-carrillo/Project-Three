@@ -22,7 +22,7 @@ The facilities models inputted aggregate patient characteristics data to classif
 
 The hospital models inputted aggregate utilization data to classify clinics into 2 groups (above average or below the group average).  The target was the ratio between non-urgent ED visits and urgent visits (to compensate for hospitals' size).  We applied the targets to another dataset containing patient population characteristics (i.e., gender, insurance, age, etc.) 
 
-The patients models used patient characteristics (per patient) to classify each patient as a potential frequent flyer or not. This model proved not to be supported by enough data.
+The patient models used patient characteristics (per patient) to classify each patient as a potential frequent flyer or not. This model proved not to be supported by enough data.
 
 ## Requirement #4: Technical requirements
 
