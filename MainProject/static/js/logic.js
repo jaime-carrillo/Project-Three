@@ -29,16 +29,6 @@ function chooseColor(objectid) {
     }
 }
 
-function setColor(density) {
-    return density > 85 ? '#a50f15' :
-        density > 15 ? '#de2d26' :
-        density > 8 ? '#fb6a4a' :
-        density > 4 ? '#fcae91' :
-        '#fee5d9';
-};
-
-
-
 function getTarget(objectid) {
     switch (objectid) {
         case "1":
@@ -113,9 +103,21 @@ d3.json(facURL, function(response) {
 
     // Create feature group
     facilities = L.featureGroup(getArrayOfMarkers())
+        // .openPopup()
+        // .bindPopup(getPopups())
+        // .on('click', function() { alert('Clicked on a group!'); })
+        // .addTo(myMap);
 
+
+    //Create function for returning color based on target
+    function setColorFac(density) {
+        return density > 85 ? '#1a9850' :
+            density > 65 ? '#91cf60' :
+            density > 45 ? '#fc8d59' :
+            density > 25 ? '#ba4f02' :
+            '#d73027';
+    };
     //Create function to get an array of the lat and lon
-
     function getArrayOfMarkers() {
         var result = [];
 
@@ -127,6 +129,9 @@ d3.json(facURL, function(response) {
             var lon = response[i].LONGITUDE;
             var newwidthfac = response[i].Target * 125;
             var newheightfac = response[i].Target * 125;
+            var label = response[i].Target.toFixed(2) * 100
+            var title = response[i].Name
+            var type = response[i].Type
 
             function chooseImage(clinic) {
                 switch (clinic) {
@@ -147,12 +152,10 @@ d3.json(facURL, function(response) {
                     popupAnchor: [1, -24],
                     iconUrl: chooseImage(response[i].Type)
                 });
-                result.push(L.marker([lat, lon], { icon: chcIcon }))
+                result.push(L.marker([lat, lon], { icon: chcIcon }).bindPopup('<h4>' + title + '</h4></n><h3 style="background-color:' + setColorFac(label) + '">' + label + '% freq flyers' + '</h3></n>' + type + ''))
                     // popup.push(L.marker.bindPopup(response[i].Name));
                     // result.push([lat, lon])
-
             }
-
         }
         return result;
     }
@@ -160,6 +163,15 @@ d3.json(facURL, function(response) {
 
 // var hosURL = baseURL + "/api/v1.0/hospitals";
 var hosURL = baseURL + "/api/v1.0/encounters";
+
+//Create function for returning color based on target
+function setColorHos(density) {
+    return density > 85 ? '#d73027' :
+        density > 65 ? '#ba4f02' :
+        density > 45 ? '#fc8d59' :
+        density > 25 ? '#91cf60' :
+        '#1a9850';
+};
 
 // Grab the data with d3
 d3.json(hosURL, function(response) {
@@ -181,6 +193,11 @@ d3.json(hosURL, function(response) {
             var lon = response[i].LONGITUDE;
             var newwidth = response[i].Target_1 * 125;
             var newheight = response[i].Target_1 * 125;
+            var urgent = response[i].Target_1.toFixed(2) * 100
+            var nonadmission = response[i].Target.toFixed(2) * 100
+            var title = response[i].facility_name
+            var type = response[i].Type
+            var bed = response[i].Beds
             console.log(response[0].Target);
 
             // Check for location property
@@ -194,7 +211,7 @@ d3.json(hosURL, function(response) {
                     iconUrl: '../png/hospital2.png'
                 });
 
-                result.push(L.marker([lat, lon], { icon: hosIcon }))
+                result.push(L.marker([lat, lon], { icon: hosIcon }).bindPopup('<h4>' + title + '</h4></n><h3 style="background-color:' + setColorHos(urgent) + '">' + urgent + '% non-urgent visits' + '</h3></n><h3 style="background-color:' + setColorHos(nonadmission) + '">' + nonadmission + '% Non-Admissions' + '</h3></n>' + type + '</h3><p> Beds:' + bed + '</p>'))
                     // popup.push(L.marker.bindPopup(response[i].Name));
                     // result.push([lat, lon])
             }
@@ -206,7 +223,6 @@ d3.json(hosURL, function(response) {
     }
 
 })
-
 
 
 // var link = "../data/hd.geojson"
@@ -277,7 +293,7 @@ function createMap(health_districts, spa, facilities, hospitals) {
     var baseMaps = {
         "Dark map": darktmap,
         "Color map": watercolormap,
-        "Ligh map": lightmap
+        "Light map": lightmap
 
     };
 

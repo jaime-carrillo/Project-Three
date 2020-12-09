@@ -14,6 +14,13 @@ h1 {
     margin: 0;
 }
 
+.jumbotron-image {
+    background: url("https://img.pngio.com/urgent-care-or-er-tips-for-deciding-where-to-go-png-emergency-room-1200_630.png") no-repeat center top;
+    background-size: cover;
+    width: 100%;
+    height: 80%;
+}
+
 
 /* CSS from the Leaflet-Choropleth documentation */
 

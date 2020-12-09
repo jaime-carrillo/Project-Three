@@ -143,12 +143,12 @@ function getData(id) {
         demoInfo.html("");
 
         // get demographic data for the name and append to panel
-        demoInfo.append("h4").text(info[0].facility_name + " (Target = " + info[0].Target + ")")
+        demoInfo.append("h4").text(info[0].facility_name + ' (' + info[0].Target * 100 + "% Non - Admissions)")
             // .append("h4").text("Name: " + info[0].facility_name)
             // .append("h4").text("Target: " + info[0].Target + "\n")
-            .append("h5").text("Total ED Visits: " + info[0].ED_Visit + "\n")
-            .append("h5").text("Type of Hospital: " + info[0].Type + "\n")
-            .append("h5").text("Licensed Beds: " + info[0].Beds + "\n")
+            .append("h5").text("Total ED Visits: " + info[0].ED_Visit)
+            .append("h5").text("Type of Hospital: " + info[0].Type)
+            .append("h5").text("Licensed Beds: " + info[0].Beds)
 
         //#############################################################
         // Gauge for dynamic district

@@ -39,45 +39,59 @@
     </div>
 
     <!-- Set section for jumbotron -->
-    <div class="jumbotron text-white jumbotron-image shadow" style="background-image: url(https://healthtechmagazine.net/sites/healthtechmagazine.net/files/styles/cdw_hero/public/articles/%5Bcdw_tech_site%3Afield_site_shortname%5D/201810/HET_Q418_EdLetter-HERO.jpg?itok=zSAInqEg)">
+    <div class="jumbotron jumbotron-image">
         <h1 class="display-1">Emergency Department Visits</h1>
-        <h2>Research suggests that nearly 30% of ED visits “could be managed in physician offices, clinics and urgent care centers” (Weinick, Burns, & Mehro, 2010)</h2>
-        <hr style="border: 1px solid whitesmoke;">
-        <!-- <p>Click the button below to get the latest data about Mars.</p> -->
-        <!-- <p><a type="button" class="btn btn-info btn-lg" href="lamap.html" role="button">Go to Map!</a></p> -->
     </div>
 
-        <!-- Set Section for Approach -->
-        <h1>The Problem</h1>
-        <div class="row">
-            <div class="container" style="margin-top:60px">
-                <div class="card">
-                    <h5 class="card-header">Our question and approach</h5>
-                    <div class="card-body">
-                        <h5 class="card-title">Question : What are the features that lead to a “frequent flyer”? Based on some research in our previous project, we hypnotized that some of the features stem from age, race, gender, income, insurance, social support, convenience, cost, and access to care.</h5>
-                        <p class="card-text">Approach #1: Can we use patient data to train a model to predict who's most likely to visit the ER for primary care services?  </p>
-                        <!-- <h5 class="card-title">What are the contributing factors of the hospitals with the highest rates of non-urgent emergency visits?</h5> -->
-                        <p class="card-text"> Approach #2: Can we use hospital and facility data to train a model to identify hospitals that have a higher average of ER visits not resulting in admission?</p>
-                        <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4156292/" class="btn btn-info">See the article in PMC </a>
-                    </div>
+    <!-- <div class="jumbotron">
+        <h1 class="display-1">Emergency Department Visits</h1>
+        <h2>Research suggests that nearly 30% of ED visits “could be managed in physician offices, clinics and urgent care centers” (Weinick, Burns, & Mehro, 2010)</h2>
+         <hr style="border: 1px solid whitesmoke;">
+     <p>Click the button below to get the latest data about Mars.</p> 
+     <p><a type="button" class="btn btn-info btn-lg" href="lamap.html" role="button">Go to Map!</a></p>
+    </div> -->
+
+    <!-- Set Section for Approach -->
+    <div class="row">
+        <div class="container" style="margin-top:60px">
+            <!-- <h1 class="display-1">Emergency Department Visits</h1> -->
+            <h2>Research suggests that nearly 30% of ED visits “could be managed in physician offices, clinics and urgent care centers” (Weinick, Burns, & Mehro, 2010)</h2>
+            <hr style="border: 1px solid whitesmoke;">
+        </div>
+    </div>
+    <h1>The Problem</h1>
+    <div class="row">
+        <div class="container" style="margin-top:60px">
+            <div class="card">
+                <h5 class="card-header">Our question and approach</h5>
+                <div class="card-body">
+                    <img src="Images/question.png" class="rounded float-left" style="padding-right: 20px" alt="the question">
+                    <h5 class="card-title">Question : What are the features that lead to a “frequent flyer”? Based on some research in our previous project, we hypnotized that some of the features stem from age, race, gender, income, insurance, social support, convenience,
+                        cost, and access to care.</h5>
+                    <p class="card-text">Approach #1: Can we use patient data to train a model to predict who's most likely to visit the ER for primary care services? </p>
+                    <!-- <h5 class="card-title">What are the contributing factors of the hospitals with the highest rates of non-urgent emergency visits?</h5> -->
+                    <p class="card-text"> Approach #2: Can we use hospital and facility data to train a model to identify hospitals that have a higher average of ER visits not resulting in admission?</p>
+                    <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4156292/" class="btn btn-info">See the article in PMC </a>
                 </div>
             </div>
         </div>
-        <br>
-        <br>
+    </div>
+    <br>
+    <br>
     <!-- Set section for card deck -->
     <h1>Data Sources</h1>
     <div class="row" id="news">
         <div class="container" style="margin-top:60px">
+            <img src="Images/CHHS.png" class="rounded img-fluid" alt="data source">
             <div class="card-deck">
-                <div class="card border-info mb-3">
-                    <div class="card-body">
+                <!-- <div class="card mb-3"> -->
+                <!-- <div class="card-body">
                         <h4 class="card-title">Office of Statewide Health Planning & Development</h4>
                         <p class="card-text">California's Office of Statewide Health Planning and Development (OSHPD) is the leader in collecting data and disseminating information about California's healthcare infrastructure.</p>
                         <a href="https://data.chhs.ca.gov/" class="btn btn-info">Visit Open Data Portal</a>
-                        <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
-                    </div>
-                </div>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div> -->
+                <!-- </div> -->
                 <div class="card border-info mb-3">
                     <div class="card-body">
                         <h4 class="card-title">Hospital Annual Utilization Report & Pivot Tables</h4>
@@ -105,15 +119,18 @@
     <div class="row">
         <div class="container" style="margin-top:60px">
             <div class="card">
-                <h5 class="card-header">Deep Learning Model</h5>
                 <h5 class="card-header">We tested all our inputs and targets with two different libraries: The Sequential model (tensorflow.keras) and the Scikit-Learn C-Support Vector Classification (sklearn.svm)</h5>
                 <div class="card-body">
+                    <h5>Visualize Decision Trees using Matplotlib</h5>
                     <article></article>
-                    <a href="Images\Deep learning model.jpeg">
-                        <img target="_blank" src="Images\Deep learning model.jpeg" alt="Deep Learning Model">
+                    <a href="Images/descisionTree.png">
+                        <img target="_blank" src="Images/descisionTree.png" alt="Model">
                     </a>
-                    <p><em>Image source: https://towardsdatascience.com/training-deep-neural-networks-9fdb1964b964
-                </em></p>
+                    <a href="Images/descisionTree2.png">
+                        <img target="_blank" src="Images/descisionTree2.png" alt="Model">
+                    </a>
+                    <!-- <p><em>Image source: https://towardsdatascience.com/training-deep-neural-networks-9fdb1964b964 -->
+                    <!-- </em></p> -->
                     </article>
                 </div>
             </div>
